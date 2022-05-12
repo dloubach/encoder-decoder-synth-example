@@ -54,7 +54,7 @@ compileVHDL = writeVHDLOps vhdlOps add1_sd
                                pinAssigs=[]
                               }
 -- program the hw
--- quartus_pgm -c DE-SoC -m JTAG -o "p;./sevenSegDec/vhdl/sevenSegDec.sof@2"
+-- quartus_pgm -c DE-SoC -m JTAG -o "p;./add1Quartus/vhdl/add1Quartus.sof@2"
 
 -- Modelsim (not tested yet)
 vhdlSim = writeAndModelsimVHDL Nothing add1_sd [1..10]
