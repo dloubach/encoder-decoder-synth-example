@@ -32,7 +32,7 @@ add1_sf = mapSY "add1_sf" add1_pf
 -- 3rd step: system definition in terms of inputs/outputs
 -- System definition associated to the system function
 add1_sd :: SysDef (Signal Int32 -> Signal Int32)
-add1_sd = newSysDef add1_sf "plus1" ["inSignal"] ["outSignal"]
+add1_sd = newSysDef add1_sf "add1Quartus" ["inSignal"] ["outSignal"]
 
 
 -- simulation setup
