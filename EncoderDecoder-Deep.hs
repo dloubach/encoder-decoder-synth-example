@@ -34,7 +34,6 @@ add_sf = zipWithSY "add_sf" add_pf
 add_sd :: SysDef (Signal Int32 -> Signal Int32 -> Signal Int32)
 add_sd = newSysDef add_sf "add_sd" ["input1","input2"] ["output"]
 
-
 -- 4th step: simulation setup
 add_simulation :: [Int32] -> [Int32] -> [Int32]
 add_simulation = simulate add_sd
@@ -61,7 +60,6 @@ sub_sf = zipWithSY "sub_sf" sub_pf
 sub_sd :: SysDef (Signal Int32 -> Signal Int32 -> Signal Int32)
 sub_sd = newSysDef sub_sf "sub_sd" ["input1","input2"] ["output"]
 
-
 -- 4th step: simulation setup
 sub_simulation :: [Int32] -> [Int32] -> [Int32]
 sub_simulation = simulate sub_sd
@@ -72,7 +70,7 @@ sub_simulation = simulate sub_sd
 -- ---------------------------------------------------------------------------
 -- application model as a new system function
 -- ---------------------------------------------------------------------------
--- system function, based on prevous processes functions
+-- system function (SF), based on prevous processes functions
 lambdaExample_sf
   :: Signal Int32 -> Signal Int32 -> (Signal Int32, Signal Int32)
 lambdaExample_sf s_key s_input = (s_enc,s_output)
@@ -80,19 +78,19 @@ lambdaExample_sf s_key s_input = (s_enc,s_output)
      s_enc    = (instantiate "add_sd" add_sd) s_input s_key
      s_output = (instantiate "sub_sd" sub_sd) s_enc s_key
 
--- system definition
+-- system definition (SD)
 lambdaExample_sd
   :: SysDef
        (Signal Int32 -> Signal Int32 -> (Signal Int32, Signal Int32))
 lambdaExample_sd =
-  newSysDef lambdaExample_sf "lambdaExample_sd" ["input1","input2"] ["output"]
+  newSysDef lambdaExample_sf "lambdaExample_sd" ["s_key","s_input"] ["s_output"]
 
 -- simulation setup
 lambdaExample_simulation
   :: [Int32] -> [Int32] -> ([Int32], [Int32])
 lambdaExample_simulation = simulate lambdaExample_sd
 -- run that to simulate
--- lambdaExample_simulation [1, 4, 6, 1, 1] [256, 512, 1024, 2048, -512]
+-- > lambdaExample_simulation [1, 4, 6, 1, 1] [256, 512, 1024, 2048, -512]
 -- ([257,516,1030,2049,-511],[256,512,1024,2048,-512])
 
 -- ---------------------------------------------------------------------------
