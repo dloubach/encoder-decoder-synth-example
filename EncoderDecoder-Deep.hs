@@ -72,6 +72,7 @@ sub_simulation = simulate sub_sd
 -- ---------------------------------------------------------------------------
 -- application model as a new system function
 -- ---------------------------------------------------------------------------
+-- system function, based on prevous processes functions
 lambdaExample_sf
   :: Signal Int32 -> Signal Int32 -> (Signal Int32, Signal Int32)
 lambdaExample_sf s_key s_input = (s_enc,s_output)
@@ -79,12 +80,16 @@ lambdaExample_sf s_key s_input = (s_enc,s_output)
      s_enc    = (instantiate "add_sd" add_sd) s_input s_key
      s_output = (instantiate "sub_sd" sub_sd) s_enc s_key
 
+-- system definition
 lambdaExample_sd
   :: SysDef
        (Signal Int32 -> Signal Int32 -> (Signal Int32, Signal Int32))
 lambdaExample_sd =
   newSysDef lambdaExample_sf "lambdaExample_sd" ["input1","input2"] ["output"]
 
+-- simulation setup
+lambdaExample_simulation
+  :: [Int32] -> [Int32] -> ([Int32], [Int32])
 lambdaExample_simulation = simulate lambdaExample_sd
 -- run that to simulate
 -- lambdaExample_simulation [1, 4, 6, 1, 1] [256, 512, 1024, 2048, -512]
