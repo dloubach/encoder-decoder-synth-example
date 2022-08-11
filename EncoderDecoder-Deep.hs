@@ -75,15 +75,16 @@ lambdaExample_sf
   :: Signal Int32 -> Signal Int32 -> (Signal Int32, Signal Int32)
 lambdaExample_sf s_key s_input = (s_enc,s_output)
    where
-     s_enc    = (instantiate "add_sd" add_sd) s_input s_key
-     s_output = (instantiate "sub_sd" sub_sd) s_enc s_key
+     s_enc    = (instantiate "cipher" add_sd) s_input s_key
+     s_output = (instantiate "decipher" sub_sd) s_enc s_key
+
 
 -- system definition (SD)
 lambdaExample_sd
   :: SysDef
        (Signal Int32 -> Signal Int32 -> (Signal Int32, Signal Int32))
 lambdaExample_sd =
-  newSysDef lambdaExample_sf "lambdaExample_sd" ["s_key","s_input"] ["s_output"]
+  newSysDef lambdaExample_sf "lambdaExample_sd" ["s_key","s_input"] ["s_enc","s_output"]
 
 -- simulation setup
 lambdaExample_simulation
