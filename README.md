@@ -11,5 +11,12 @@ $ stack update
 $ stack install  
 ```
 
-## How to run the example
-`$ stack ghci EncoderDecoder-Deep.hs`
+## How to run the example, simulate it, and generate the VHDL
+```
+$ stack ghci EncoderDecoder-Deep.hs
+> lambdaExample_simulation [1, 4, 6, 1, 1] [256, 512, 1024, 2048, -512]
+> compileVHDL
+```
+
+## Final generated RTL
+![rtl](https://github.com/dloubach/encoder-decoder-synth-example/blob/master/figs/rtl.png)
